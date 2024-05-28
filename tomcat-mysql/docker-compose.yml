@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cdac
+    networks:
+      - tomcat-mysql-network
+
+  tomcat:
+    build: .
+    container_name: tomcat-container
+    ports:
+      - "8080:8080"
+    networks:
+      - tomcat-mysql-network
+
+networks:
+  tomcat-mysql-network:
+    driver: bridge
